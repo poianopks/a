@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPTs + 주식 API 왕초보 따라하기 가이드</title>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f9fafb;
+      color: #333;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+      color: #2c3e50;
+    }
+    h2 {
+      font-size: 1.5em;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      color: #34495e;
+    }
+    p, ul, ol {
+      font-size: 1.1em;
+    }
+    ul, ol {
+      margin-left: 1.2em;
+    }
+    .step {
+      background-color: #fff;
+      border-left: 6px solid #3498db;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+    .box {
+      background-color: #ecf0f1;
+      padding: 10px;
+      margin: 15px 0;
+      border-left: 4px solid #7f8c8d;
+      border-radius: 4px;
+    }
+    code {
+      background-color: #eef;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+    }
+    .example {
+      background-color: #f7f9fa;
+      border: 1px dashed #aaa;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+    a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #7f8c8d;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>👶 GPTs + 주식 API 왕초보 따라하기 가이드</h1>
+  <p>이 페이지를 보면, 프로그래밍 경험이 전혀 없어도 ChatGPT를 활용해 <b>실시간 주식 시세</b>와 <b>최신 뉴스</b>를 가져오는 방법을 배울 수 있어요. HTML 파일로 저장하면 언제든 열어보며 학습할 수 있습니다.</p>  <!-- 용어 설명 박스 -->  <div class="box">
+    <strong>💡 용어 쉽게 설명하기</strong>
+    <ul>
+      <li><strong>GPT Builder</strong>: ChatGPT에서 직접 나만의 GPT를 만드는 공장 같은 곳이에요.</li>
+      <li><strong>액션(Action)</strong>: GPT에게 특정 기능(예: 주식 데이터 가져오기)을 수행하도록 추가하는 <u>도구 상자</u>예요.</li>
+      <li><strong>API</strong>: 앱이나 서비스가 서로 데이터를 주고받는 <u>인터넷의 전화선</u> 같은 거예요.</li>
+      <li><strong>API 키(API Key)</strong>: API를 사용할 때 필요한 <u>비밀 번호</u>예요. 함부로 공유하면 안 돼요!</li>
+      <li><strong>시스템 명령(System Instruction)</strong>: GPT에게 주는 <u>숨은 지시 사항</u>이에요. 사용자는 안 보이지만, GPT는 이 내용을 보고 행동해요.</li>
+      <li><strong>웹 브라우징(Web Browsing)</strong>: GPT가 스스로 인터넷을 검색하는 기능이에요.</li>
+    </ul>
+  </div>  <!-- 1단계 -->  <div class="step">
+    <h2>1단계: 무료 주식 API 소개 및 키 발급받기</h2>
+    <p>주식 시세, 뉴스, 재무 정보 등을 가져오기 위해 먼저 <b>무료 API</b>에 가입하고 <b>API 키</b>를 발급받을 거예요.</p>
+    <h3>1-1. 대표적인 무료 주식 API</h3>
+    <ol>
+      <li>
+        <strong>Alpha Vantage</strong><br>
+        - 실시간 주식 시세(분별, 일별), 환율, 암호화폐 시세, 재무 지표, 뉴스 등 다양한 데이터를 무료로 제공해요.<br>
+        - 무료로 <code>하루 25회</code> 요청할 수 있어요. (더 쓰려면 유료 업그레이드 필요)<br>
+        - <a href="https://www.alphavantage.co" target="_blank">Alpha Vantage 홈페이지</a>
+      </li>
+      <li>
+        <strong>Finnhub</strong><br>
+        - 전 세계 주식 시세, 경제 뉴스, 기업 재무정보 등을 무료로 제공해요.<br>
+        - 무료로 <code>분당 60회</code> 요청할 수 있어요. (초과 시 유료 플랜 필요)<br>
+        - <a href="https://finnhub.io" target="_blank">Finnhub 홈페이지</a>
+      </li>
+      <li>
+        <strong>Financial Modeling Prep (FMP)</strong><br>
+        - 기업의 재무제표(손익계산서, 대차대조표 등), 재무비율, 주식 기본정보 등을 무료로 제공해요.<br>
+        - <a href="https://financialmodelingprep.com" target="_blank">FMP 홈페이지</a>
+      </li>
+    </ol>
+    <h3>1-2. Alpha Vantage API 키 발급받기</h3>
+    <p>여기서는 예시로 <strong>Alpha Vantage</strong>의 API 키를 발급받는 과정을 따라할게요.</p>
+    <ol>
+      <li>
+        <strong>Alpha Vantage 홈페이지 접속</strong><br>
+        웹브라우저를 열고 <a href="https://www.alphavantage.co" target="_blank">https://www.alphavantage.co</a>에 접속해요.
+      </li>
+      <li>
+        <strong>"Get Your Free API Key" 클릭</strong><br>
+        메인 화면에서 "Get your free API key" 버튼을 찾아 클릭해요.
+      </li>
+      <li>
+        <strong>간단한 설문 작성</strong><br>
+        팝업 폼이 나오면, 아래 정보를 입력해요:<br>
+        - <code>Type of project</code>: (예: 개인 투자용)
+        - <code>Industry</code>: (예: 개인)
+        - <code>Email</code>: 자신의 이메일 주소 입력
+        - <code>Agree to Terms</code> 체크
+      </li>
+      <li>
+        <strong>API 키 확인 및 복사</strong><br>
+        제출하면 화면에 <code>API Key: XXXXXXXXXXXXX</code>가 나와요. 이 키를 <u>꼭 복사해서 안전한 곳에 저장</u>하세요!<br>
+        예시:<br>
+        <div class="example">
+          API Key: <code>9KHXYZ123ABCD456</code>
+        </div>
+        이메일로도 키가 전송되니 나중에 확인할 수 있어요.
+      </li>
+    </ol>
+    <p><em>🔒 <strong>API 키는 비밀이에요!</strong> 다른 사람에게 공유하면 안 돼요.</em></p>
+  </div>  <!-- 2단계 -->  <div class="step">
+    <h2>2단계: GPT Builder에서 새 GPT 만들기</h2>
+    <p>이제 <b>ChatGPT</b> 안에 나만의 GPT를 만들어 볼 거예요. GPT Builder를 처음 쓰는 경우라도 걱정 마세요! 아주 쉽게 설명해 드릴게요.</p>
+    <ol>
+      <li><strong>ChatGPT 접속 및 로그인</strong><br>
+        <ul>
+          <li>웹브라우저에서 <a href="https://chat.openai.com" target="_blank">https://chat.openai.com</a>에 들어가요.</li>
+          <li>OpenAI 계정으로 로그인합니다. (계정이 없으면 회원가입부터 해주세요.)</li>
+        </ul>
+      </li>
+      <li><strong>GPTs 메뉴로 이동</strong><br>
+        좌측 사이드바에서 <code>GPTs</code> 또는 <code>Explore GPTs</code> 아이콘을 클릭해요.
+      </li>
+      <li><strong>"+ Create GPT" 버튼 클릭</strong><br>
+        오른쪽 상단에 있는 <code>+ Create GPT</code> 버튼을 눌러요.
+      </li>
+      <li><strong>기본 정보 입력</strong><br>
+        - <code>Name (이름)</code>: "주식 분석 GPT" 같이 알아보기 쉬운 이름<br>
+        - <code>Description (설명)</code>: "실시간 주가와 뉴스를 알려주는 GPT"<br>
+        - <code>Avatar (아이콘)</code>: 원하는 이미지를 고르거나 기본 아이콘을 사용해도 돼요.
+      </li>
+      <li><strong>"Create GPT" 클릭</strong><br>
+        입력이 완료되면 맨 아래에 있는 <code>Create GPT</code> 버튼을 누릅니다. 이제 GPT가 만들어졌어요!
+      </li>
+    </ol>
+    <p>성공하면 새로운 GPT 편집 화면이 보일 거예요. 이 화면에서 <strong>Configure (설정)</strong>와 <strong>Preview (미리보기)</strong> 탭을 볼 수 있어요.</p>
+  </div>  <!-- 3단계 -->  <div class="step">
+    <h2>3단계: 액션(Action) 추가하기</h2>
+    <p>GPT에게 주식 API를 호출할 수 있는 <strong>액션</strong>을 알려줄 거예요. 액션을 추가하면 GPT가 직접 API에 접속해 실시간 데이터를 가져올 수 있습니다.</p>
+    <h3>3-1. Configure 탭으로 이동</h3>
+    <p>새로 만든 GPT 화면에서 <code>Configure</code> 탭이 선택되어 있는지 확인해요.</p>
+    <h3>3-2. Actions 섹션 찾기</h3>
+    <ol>
+      <li>스크롤을 아래로 내려 <code>Actions</code> 또는 <code>Custom Actions</code> 부분을 찾습니다.</li>
+      <li>"+ Add Action" 혹은 "Create new action" 버튼을 클릭해요.</li>
+    </ol>
+    <h3>3-3. 액션 정보 입력하기</h3>
+    <p>이제 API 정보를 입력해야 합니다. 아래 표를 보면서 따라 해 보세요!</p>
+    <div class="box">
+      <strong>📋 액션 설정 예시 (Alpha Vantage)</strong>
+      <ul>
+        <li><strong>Action Name</strong>: <code>GetStockPrice</code> (원하는 이름으로)</li>
+        <li><strong>Method (HTTP 방식)</strong>: <code>GET</code></li>
+        <li><strong>Base URL</strong>: <code>https://www.alphavantage.co/query</code></li>
+        <li><strong>Path</strong>: (비워두거나 <code>/query</code> 입력)</li>
+        <li><strong>Query Parameters (쿼리 매개변수)</strong>:
+          <ul>
+            <li><code>function</code>: <code>GLOBAL_QUOTE</code> (항상 이 값 사용)</li>
+            <li><code>symbol</code>: <code>{{ticker}}</code> (사용자가 입력한 종목 기호로 대체)</li>
+            <li><code>apikey</code>: <code>YOUR_API_KEY</code> (발급받은 키를 넣으세요)</li>
+          </ul>
+        </li>
+        <li><strong>Authentication (인증)</strong>: <code>API Key</code> 유형 선택 후, <code>Query Parameter</code> 위치, <code>apikey</code> 이름, 그리고 <code>YOUR_API_KEY</code> 입력</li>
+      </ul>
+    </div>
+    <p>위 설정이 완료되면 <code>Save</code> 버튼을 눌러 액션을 저장하세요!</p>
+    <h3>3-4. 응답 응답(Response) 예시</h3>
+    <p>액션이 호출되면 API가 JSON 형태로 결과를 주는데, GPT가 읽기 쉽게 해석하려면 응답 중 필요한 정보(예: 최신 주가)를 지정해주는 게 좋아요. 예시는 아래와 같습니다:</p>
+    <div class="example">
+      {<br>
+      &nbsp;&nbsp;"Global Quote": {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;"01. symbol": "AAPL",<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;"05. price": "150.00",<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;"10. change percent": "+3.70%"<br>
+      &nbsp;&nbsp;}<br>
+      }
+    </div>
+    <p>GPT Builder에서 <code>price</code> 필드(예: "05. price")를 <code>price</code>라는 이름으로 응답 스키마에 지정하면, GPT가 이 값을 캐치하여 답변에 쓸 수 있어요.</p>
+  </div>  <!-- 4단계 -->  <div class="step">
+    <h2>4단계: 시스템 명령(System Instruction) 추가하기</h2>
+    <p>GPT에게 언제 액션을 써야 할지 알려주는 <strong>숨은 지침</strong>을 작성할게요.</p>
+    <ol>
+      <li>Configure 탭에서 <code>Instructions</code> 또는 <code>System Message</code> 부분을 찾습니다.</li>
+      <li>아래 예시처럼 입력해 보세요:<br>
+        <div class="example">
+          사용자가 특정 주식의 현재 가격을 물으면, <strong>GetStockPrice 액션</strong>을 사용해 실시간 주가 정보를 가져와 답변하세요.
+        </div>
+      </li>
+      <li><code>Save</code> 버튼을 눌러 저장합니다.</li>
+    </ol>
+    <p>이렇게 하면 GPT가 "애플 주가 알려줘"라고 물었을 때 자동으로 액션을 호출해서 답변해 줄 거예요!</p>
+  </div>  <!-- 5단계 -->  <div class="step">
+    <h2>5단계: 미리보기(Preview)에서 테스트하기</h2>
+    <p>이제 GPT가 잘 작동하는지 확인합니다. <strong>Preview</strong> 탭으로 넘어가세요.</p>
+    <ol>
+      <li><strong>Preview 탭 클릭</strong>: GPT Builder 상단 또는 우측에 있어요.</li>
+      <li><strong>질문 입력</strong>: 예를 들어 <code>"Apple (AAPL)의 현재 주가는 얼마예요?"</code>라고 입력해 보세요.</li>
+      <li><strong>액션 호출 및 응답 확인</strong>: GPT가 "GetStockPrice" 액션을 호출해 최신 데이터를 가져오고, 아래처럼 답변해 줄 거예요:<br>
+        <div class="example">
+          "현재 애플(AAPL)의 실시간 주가는 <strong>150.00달러</strong>입니다. (변동률: +3.70%)"
+        </div>
+      </li>
+      <li><strong>다른 종목도 테스트</strong>: 예를 들어 <code>"TSLA 주가 알려줘"</code>도 물어보세요.</li>
+    </ol>
+    <p>정상적으로 정보가 나오면 모든 설정이 완료된 거예요! 🎉</p>
+  </div>  <!-- 6단계 -->  <div class="step">
+    <h2>6단계: 액션 없이 최신 정보 얻기 (웹 브라우징 설정)</h2>
+    <p>API 설정이 복잡하다면, <strong>웹 브라우징 기능</strong>을 켜서 GPT가 인터넷에 직접 접속해 정보를 가져오게 할 수도 있어요.</p>
+    <ol>
+      <li>Configure 탭에서 <code>Capabilities &gt; Web Browsing</code> 옵션을 <strong>켬(On)</strong>으로 변경합니다.</li>
+      <li><strong>Save</strong>를 눌러 저장하세요.</li>
+      <li>Preview 탭에서 예시 질문을 입력합니다. 예: <code>"오늘 삼성전자 주가가 어떻게 돼요?"</code></li>
+      <li>GPT가 자동으로 인터넷을 검색해 최신 정보를 찾아 알려줍니다.</li>
+    </ol>
+    <p>이 기능은 API 키 없이도 최신 정보를 얻을 수 있지만, 정확한 수치나 형식적인 데이터는 API를 사용했을 때보다 약간 부정확할 수 있어요.</p>
+  </div>  <!-- 7단계 -->  <div class="step">
+    <h2>7단계: 자주 사용하는 용어 정리</h2>
+    <p>지금까지 나온 용어들을 정리해 볼게요. 한번만 읽으면 나중에 헷갈리지 않을 거예요!</p>
+    <ul>
+      <li><strong>GPT Builder</strong>: ChatGPT 안에서 Custom GPT를 만드는 곳.</li>
+      <li><strong>액션(Action)</strong>: GPT에게 특정 기능을 수행하도록 추가하는 도구.</li>
+      <li><strong>API</strong>: 앱끼리 데이터를 주고받는 인터넷 전화선.</li>
+      <li><strong>API 키(API Key)</strong>: 전화선을 사용할 때 필요한 비밀번호 같은 것.</li>
+      <li><strong>시스템 명령(System Instruction)</strong>: GPT 내부에서만 보이는 숨은 지시사항.</li>
+      <li><strong>웹 브라우징(Web Browsing)</strong>: GPT가 스스로 인터넷 검색하기.</li>
+    </ul>
+  </div>  <!-- 마무리 -->  <div class="step">
+    <h2>마무리: 초간단 따라하기 정리</h2>
+    <ol>
+      <li>원하는 무료 주식 API에 가입하고, API 키를 꼭 복사해요.</li>
+      <li>ChatGPT에서 GPT Builder로 새 GPT를 만들어요.</li>
+      <li>Configure 탭에서 액션을 추가하고, API 정보를 입력해요.</li>
+      <li>시스템 명령에 "주가 알려달라면 액션을 써라"라는 지침을 넣어요.</li>
+      <li>Preview 탭에서 "오늘 애플 주가 알려줘" 같은 질문으로 테스트해요.</li>
+      <li>액션 없이 그냥 최신 정보를 보고 싶다면, 웹 브라우징 옵션을 켜면 돼요.</li>
+    </ol>
+    <p>이 과정을 모두 따라왔으면, 여러분만의 <strong>주식 도우미 GPT</strong>가 완성된 거예요! 앞으로 이 GPT에게 "내 포트폴리오 종목들 오늘 어떠니?", "최근 시장 뉴스 알려줘"처럼 물어보면, 실시간 데이터와 뉴스까지 알려준답니다. 💼🤖</p>
+  </div>  <div class="footer">
+    <p>🎉 모두 고생하셨습니다! 이 가이드를 참고하여, 누구나 쉽고 빠르게 <strong>최신 정보를 활용하는 똑똑한 GPT 비서</strong>를 만들어 보세요! 🚀📈</p>
+  </div>
+</body>
+</html>
