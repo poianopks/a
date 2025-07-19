@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>왕초보 파이썬 가이드: 기초부터 기업 분석과 뉴스 가져오기</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px auto;
+            max-width: 900px;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .section {
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .title {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            font-size: 1.4em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .title:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-top: 1px solid #ddd;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+            border: 1px solid #ddd;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+    </style>
+    <script>
+        function toggleContent(id) {
+            var content = document.getElementById(id);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>왕초보를 위한 파이썬 최고 기초와 실전: 기업 분석 & 뉴스 가져오기</h1>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content1')">1. 파이썬 기초 개념 (왕초보 레벨)</div>
+        <div id="content1" class="content">
+            <p>파이썬은 간단하고 읽기 쉬운 프로그래밍 언어입니다. Guido van Rossum이 만들었고, 데이터 분석, 웹 개발, 자동화 등에 사용됩니다. 초보자에게 딱 맞아요! 배우기 쉽고, 영어처럼 자연스러운 문법입니다.</p>
+            <p>왜 최고인가? 무료, 오픈소스, 방대한 라이브러리 (예: 데이터 처리에 pandas). 2025년에도 가장 인기 있는 언어 중 하나입니다.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content2')">2. 파이썬 설치 및 Hello World (왕초보 따라하기)</div>
+        <div id="content2" class="content">
+            <ol>
+                <li>python.org에서 Python 다운로드 (최신 버전 3.12+ 추천).</li>
+                <li>설치 후 명령 프롬프트 열고 <code>python --version</code> 입력해 확인.</li>
+                <li>새 파일 hello.py 만들기: <pre><code>print("Hello, World!")</code></pre></li>
+                <li>명령어: <code>python hello.py</code> 실행. 화면에 Hello, World! 출력!</li>
+            </ol>
+            <p>이게 첫 프로그램! 에러 나면 설치 확인하세요.</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content3')">3. 파이썬 기본 문법: 변수, 데이터 타입, 제어문 (왕초보 따라하기)</div>
+        <div id="content3" class="content">
+            <p><strong>변수와 데이터 타입:</strong> 이름 = 값. 예: <code>x = 5  # 정수</code>, <code>name = "홍길동"  # 문자열</code>, <code>prices = [100, 200]  # 리스트</code></p>
+            <p><strong>제어문:</strong> if 조건: 코드. 예:</p>
+            <pre><code>age = 20
+if age >= 18:
+    print("성인입니다")</code></pre>
+            <p><strong>루프:</strong> for i in range(5): print(i)  # 0부터 4까지 출력</p>
+            <p>함수: def add(a, b): return a + b</p>
+            <p>연습: 위 코드 복사해 실행해 보세요!</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content4')">4. 파이썬으로 기업 분석: 주식 데이터 가져오기 (yfinance 사용, 왕초보 따라하기)</div>
+        <div id="content4" class="content">
+            <p>yfinance 라이브러리로 Yahoo Finance 데이터 가져옵니다. 기업 분석에 유용: 주가, 재무 정보 등.</p>
+            <ol>
+                <li>설치: <code>pip install yfinance</code></li>
+                <li>코드 예시:</li>
+                <pre><code>import yfinance as yf
+
+stock = yf.Ticker("AAPL")  # Apple 회사
+info = stock.info
+print("회사 이름:", info['longName'])
+print("현재 가격:", info['currentPrice'])
+
+history = stock.history(period="1y")  # 1년 데이터
+print(history.head())  # 첫 5줄 출력</code></pre>
+                <li>실행: python 파일.py. 데이터 분석: 평균 주가 계산 등 (pandas 사용).</li>
+            </ol>
+            <p>분석 팁: history['Close'].mean()으로 평균 주가. 투자 조심!</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="title" onclick="toggleContent('content5')">5. 파이썬으로 뉴스 가져오기: News API 사용 (왕초보 따라하기)</div>
+        <div id="content5" class="content">
+            <p>NewsAPI.org로 최신 뉴스 가져옵니다. API 키 필요 (newsapi.org에서 무료 등록).</p>
+            <ol>
+                <li>설치: <code>pip install requests</code> (또는 urllib 사용)</li>
+                <li>코드 예시 (requests 사용):</li>
+                <pre><code>import requests
+
+api_key = 'your_api_key_here'  # 당신의 키 입력
+url = f'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey={api_key}'
+response = requests.get(url)
+data = response.json()
+
+for article in data['articles'][:5]:  # 상위 5개
+    print(article['title'])</code></pre>
+                <li>urllib 버전 (설치 없이):</li>
+                <pre><code>import urllib.request
+import json
+
+api_key = 'your_api_key_here'
+url = f'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey={api_key}'
+with urllib.request.urlopen(url) as response:
+    data = json.loads(response.read().decode())
+    for article in data['articles'][:5]:
+        print(article['title'])</code></pre>
+                <li>실행: 뉴스 제목 출력. 분석: 키워드 검색 등 추가.</li>
+            </ol>
+            <p>더 공부: newsapi-python 패키지 사용.</p>
+        </div>
+    </div>
+
+</body>
+</html>
