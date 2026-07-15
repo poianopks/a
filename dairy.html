@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>경기순환시계 투자판단표</title>
+  <style>
+    body {
+      font-family: Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 24px;
+      color: #222;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+    }
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f3f4f6;
+    }
+    ul {
+      margin: 8px 0 0 18px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .attack { color: #b91c1c; font-weight: bold; }
+    .neutral { color: #a16207; font-weight: bold; }
+    .defense { color: #1d4ed8; font-weight: bold; }
+    .good { color: #15803d; font-weight: bold; }
+    .bad { color: #b91c1c; font-weight: bold; }
+    .quote {
+      background: #f8fbff;
+      border-left: 4px solid #93c5fd;
+      padding: 12px;
+      border-radius: 8px;
+    }
+    .clock {
+      width: 320px;
+      height: 320px;
+      margin: 20px auto;
+      border-radius: 50%;
+      position: relative;
+      background:
+        conic-gradient(
+          #dbeafe 0deg 90deg,
+          #dcfce7 90deg 180deg,
+          #fef3c7 180deg 270deg,
+          #fee2e2 270deg 360deg
+        );
+      border: 8px solid #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .center {
+      position: absolute;
+      inset: 50%;
+      width: 90px;
+      height: 90px;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .needle {
+      position: absolute;
+      width: 4px;
+      height: 110px;
+      background: #111;
+      left: 158px;
+      top: 52px;
+      transform-origin: bottom center;
+      transform: rotate(35deg);
+      border-radius: 4px;
+    }
+    .dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #111;
+      border-radius: 50%;
+      left: 152px;
+      top: 152px;
+    }
+    .label {
+      position: absolute;
+      width: 100px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .l1 { top: 20px; left: 110px; }
+    .l2 { top: 110px; right: 6px; }
+    .l3 { bottom: 20px; left: 110px; }
+    .l4 { top: 110px; left: 6px; }
+    .footer {
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>경기순환시계 투자판단표</h1>
+      <p>핵심: 지금이 <b>공격</b>, <b>중립</b>, <b>방어</b> 중 어디인지 먼저 판단한다.</p>
+    </div>
+
+    <div class="card">
+      <h2>1. 경기순환시계</h2>
+      <div class="clock">
+        <div class="label l1">회복 초기<br><span class="good">분할매수 관심</span></div>
+        <div class="label l2">확장/과열<br><span class="bad">추격주의</span></div>
+        <div class="label l3">둔화/피크<br><span class="bad">비중조절</span></div>
+        <div class="label l4">침체/바닥<br><span class="neutral">관찰 시작</span></div>
+        <div class="needle"></div>
+        <div class="dot"></div>
+        <div class="center">경기<br>순환시계</div>
+      </div>
+
+      <table>
+        <tr>
+          <th>국면</th>
+          <th>특징</th>
+          <th>행동</th>
+        </tr>
+        <tr>
+          <td>침체</td>
+          <td>실적 악화, 경기 둔화</td>
+          <td>무리한 매수 금지, 바닥 신호 관찰</td>
+        </tr>
+        <tr>
+          <td>회복 초기</td>
+          <td>나빠지던 것이 멈추고 개선 시작</td>
+          <td>좋은 분할매수 구간</td>
+        </tr>
+        <tr>
+          <td>확장</td>
+          <td>실적/수출/수급 개선</td>
+          <td>주식 비중 확대 가능</td>
+        </tr>
+        <tr>
+          <td>둔화/피크</td>
+          <td>숫자는 좋지만 기대 과열</td>
+          <td>관망, 일부 매도, 현금 점검</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>2. 공격 / 중립 / 방어</h2>
+      <div class="grid">
+        <div class="box">
+          <h3 class="attack">공격</h3>
+          <ul>
+            <li>금리 부담 완화</li>
+            <li>경기 회복</li>
+            <li>수출 개선</li>
+            <li>실적 상향</li>
+            <li>주도 섹터 강함</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3 class="neutral">중립</h3>
+          <ul>
+            <li>좋은 신호와 나쁜 신호 혼재</li>
+            <li>선별 매수만 유효</li>
+            <li>현금과 주식 균형</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3 class="defense">방어</h3>
+          <ul>
+            <li>실적 하향</li>
+            <li>경기 둔화</li>
+            <li>수급 악화</li>
+            <li>현금 비중 확대</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>3. 매수 / 관망 / 매도</h2>
+      <table>
+        <tr>
+          <th>상황</th>
+          <th>신호</th>
+          <th>행동</th>
+        </tr>
+        <tr>
+          <td>매수 늘릴 때</td>
+          <td>재고 감소, 가격 하락 멈춤, 실적 하향 종료</td>
+          <td>분할매수 시작</td>
+        </tr>
+        <tr>
+          <td>관망할 때</td>
+          <td>방향 애매, 기대만 큼</td>
+          <td>기다림, 소액 테스트만</td>
+        </tr>
+        <tr>
+          <td>매도할 때</td>
+          <td>실적 피크, 과열, 공급 증가</td>
+          <td>분할매도, 비중축소</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>4. 사이클주 핵심</h2>
+      <table>
+        <tr>
+          <th>조합</th>
+          <th>해석</th>
+        </tr>
+        <tr>
+          <td>저PER + 고PBR</td>
+          <td>실적 피크 가능성 → 매도/비중축소 검토</td>
+        </tr>
+        <tr>
+          <td>고PER + 저PBR</td>
+          <td>실적 바닥 가능성 → 분할매수 검토</td>
+        </tr>
+      </table>
+      <p class="quote">
+        좋은 회사와 좋은 매수 타이밍은 다르다.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>5. 현금 vs 주식</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>현금 많이 유지</h3>
+          <ul>
+            <li>확신 낮음</li>
+            <li>실적 하향</li>
+            <li>경기 둔화</li>
+            <li>수급 불안</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>주식 많이 유지</h3>
+          <ul>
+            <li>경기 회복</li>
+            <li>실적 상향</li>
+            <li>주도주 강함</li>
+            <li>조정이 매수기회</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>6. 심리: 결핍 vs 풍족</h2>
+      <div class="grid">
+        <div class="box">
+          <h3>결핍마인드</h3>
+          <ul>
+            <li>지금 안 하면 끝날 것 같음</li>
+            <li>현금이 불안함</li>
+            <li>손실 = 실패</li>
+            <li>현재 작은 불편을 못 견딤</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>풍족마인드</h3>
+          <ul>
+            <li>기회는 또 온다고 봄</li>
+            <li>현금도 포지션</li>
+            <li>손실 = 비용</li>
+            <li>현재 작은 불편을 감수</li>
+          </ul>
+        </div>
+      </div>
+      <p class="quote">
+        풍족마인드는 불확실성을 피하는 것이 아니라, 감당 가능한 구조를 만든 뒤 투자하는 것이다.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>7. 공부/과제에도 같은 원리</h2>
+      <table>
+        <tr>
+          <th>유형</th>
+          <th>설명</th>
+        </tr>
+        <tr>
+          <td>미리 하는 사람</td>
+          <td>현재 작은 불편을 감수하고 미래 여유를 만듦 → 풍족 쪽</td>
+        </tr>
+        <tr>
+          <td>마감 닥쳐서 하는 사람</td>
+          <td>현재 불편을 피하다 미래 큰 결핍을 만듦 → 결핍 쪽</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>8. 한 줄 원칙</h2>
+      <ul>
+        <li>공격: 좋아지는 초기 + 숫자 확인</li>
+        <li>중립: 신호 혼재 + 선별매수</li>
+        <li>방어: 실적 하향 + 현금 확대</li>
+        <li>매수: 나빠지던 게 멈추고 좋아질 때</li>
+        <li>매도: 피크 실적 + 과열 + 공급 증가</li>
+        <li>심리: 불안해서 매매하면 결핍, 기준으로 움직이면 풍족</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      경기순환시계 메모 HTML
+    </div>
+  </div>
+</body>
+</html>
