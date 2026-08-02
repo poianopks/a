@@ -4,7 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>멜로디 시창 훈련</title>
-<script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.6/build/cjs/vexflow.js"></script>
+<script>
+// VexFlow를 동적으로 로드하고 준비되면 콜백 실행
+var vexLoaded=false;
+function onVexLoaded(){vexLoaded=true;if(window._vexReadyCb)window._vexReadyCb();}
+(function(){
+  var s=document.createElement("script");
+  s.src="https://cdn.jsdelivr.net/npm/vexflow@4.2.6/build/cjs/vexflow.js";
+  s.onload=onVexLoaded;
+  s.onerror=function(){
+    document.querySelectorAll(".sheet-wrap").forEach(function(el){
+      el.innerHTML='<p style="color:#dc2626;padding:1rem;font-size:.82rem">VexFlow 로드 실패.<br>인터넷 연결을 확인하고 새로고침 해주세요.</p>';
+    });
+  };
+  document.head.appendChild(s);
+})();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
@@ -504,15 +519,34 @@ function togglePlay(){
 // ══════════════════════════════════════════════════════
 //  SHEET MUSIC
 // ══════════════════════════════════════════════════════
+var renderRetries=0;
 function renderSheet(){
   const stage=stages[currentStageIdx];
   const ex=stage.exercises[currentExIdx];
   const c=document.getElementById("sheetContainer");
   if(!c)return;
+
+  // VexFlow 아직 미로드: 최대 30회(15초) 재시도
+  if(!window.Vex||!window.Vex.Flow){
+    c.innerHTML='<p style="color:#64748b;font-size:.82rem;padding:.5rem">악보 로딩 중...</p>';
+    if(renderRetries<30){
+      renderRetries++;
+      // onload 콜백 등록 (중복 방지)
+      window._vexReadyCb=function(){renderRetries=0;renderSheet();};
+      // 폴링 폴백
+      setTimeout(function(){if(!vexLoaded)renderSheet();},500);
+    }else{
+      c.innerHTML='<p style="color:#dc2626;font-size:.82rem;padding:.5rem">VexFlow 로드 실패.<br>인터넷 연결 후 새로고침 해주세요.</p>';
+    }
+    return;
+  }
+  renderRetries=0;
+  window._vexReadyCb=null;
+
   c.innerHTML="";
-  if(!window.Vex){c.textContent="VexFlow 로딩 중...";return;}
   try{
-    const{Renderer,Stave,StaveNote,Voice,Formatter,Accidental,Beam}=Vex.Flow;
+    const VF=Vex.Flow;
+    const{Renderer,Stave,StaveNote,Voice,Formatter,Accidental,Beam,Fraction}=VF;
     const w=Math.min(c.offsetWidth||640,680);
     const renderer=new Renderer(c,Renderer.Backends.SVG);
     renderer.resize(w,190);
@@ -524,7 +558,7 @@ function renderSheet(){
     stave.setContext(ctx).draw();
     const sns=ex.notes.map((note,idx)=>{
       let dur=note.duration;
-      if(note.dots)dur+=`d`;
+      if(note.dots)dur+="d";
       const sn=new StaveNote({keys:[note.pitch],duration:dur,clef:"treble"});
       if(note.accidental)sn.addModifier(new Accidental(note.accidental),0);
       const active=(idx===activeNoteIdx);
@@ -535,10 +569,10 @@ function renderSheet(){
     voice.setStrict(false);
     voice.addTickables(sns);
     new Formatter().joinVoices([voice]).format([voice],w-120);
-    const beams=Beam.generateBeams(sns,{groups:[new Vex.Flow.Fraction(2,8)],stem_direction:1});
+    const beams=Beam.generateBeams(sns,{groups:[new Fraction(2,8)],stem_direction:1});
     voice.draw(ctx,stave);
     beams.forEach(b=>b.setContext(ctx).draw());
-  }catch(e){c.textContent="악보 렌더링 오류: "+e.message;}
+  }catch(e){c.innerHTML='<p style="color:#dc2626;font-size:.82rem;padding:.5rem">악보 오류: '+e.message+'</p>';}
 }
 
 // ══════════════════════════════════════════════════════
@@ -714,7 +748,9 @@ function refreshAll(){
   updateExDots();
   updatePlayBtn();
   updateCompletion();
-  setTimeout(renderSheet,50);
+  // VexFlow 이미 로드됐으면 즉시 렌더, 아니면 renderSheet 내부 재시도가 처리
+  renderRetries=0;
+  setTimeout(renderSheet,30);
 }
 
 // ══════════════════════════════════════════════════════
