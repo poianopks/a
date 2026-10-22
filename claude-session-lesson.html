@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>클로드 코드 세션 오가기 — 왕초보 따라하기</title>
+<style>
+  :root {
+    --bg: #f7f6f2; --card: #ffffff; --text: #22211f; --muted: #6b6860;
+    --accent: #c4622d; --accent-soft: #fbeee6; --line: #e4e1d8; --ok: #2f7d4f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1a18; --card: #262522; --text: #ecebe6; --muted: #a8a59c;
+      --accent: #e8875a; --accent-soft: #3a2a20; --line: #3a3833; --ok: #6cc391;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    line-height: 1.7; font-size: 17px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.6rem; line-height: 1.35; margin: 8px 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  h2 { font-size: 1.25rem; margin: 0 0 12px; }
+  h3 { font-size: 1.05rem; margin: 18px 0 8px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 20px 18px; margin-bottom: 18px;
+  }
+  .badge {
+    display: inline-block; background: var(--accent); color: #fff;
+    border-radius: 999px; padding: 2px 12px; font-size: .85rem; margin-bottom: 8px;
+  }
+  ol { padding-left: 1.3em; margin: 0; }
+  li { margin: 6px 0; }
+  b { color: var(--accent); }
+  .session {
+    border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin: 10px 0;
+  }
+  .session .name { font-weight: 700; }
+  .session .repo { color: var(--muted); font-size: .92rem; }
+  .btn {
+    display: block; text-align: center; margin-top: 10px; padding: 12px;
+    background: var(--accent); color: #fff; text-decoration: none;
+    border-radius: 10px; font-weight: 700; word-break: break-all;
+  }
+  .tip {
+    background: var(--accent-soft); border-radius: 10px; padding: 12px 14px; margin-top: 14px;
+  }
+  .qa dt { font-weight: 700; margin-top: 14px; }
+  .qa dd { margin: 4px 0 0; color: var(--muted); }
+  .summary { border-left: 5px solid var(--ok); }
+  code { background: var(--accent-soft); padding: 1px 6px; border-radius: 5px; font-size: .92em; word-break: break-all; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>📱 클로드 코드 세션 오가기<br>왕초보 따라하기</h1>
+  <p class="sub">새 세션(홈페이지 작업방)으로 갔다가, 다시 예전 대화방으로 돌아오는 방법</p>
+
+  <div class="card">
+    <span class="badge">먼저 알아두기</span>
+    <h2>🏠 세션 = 작업방</h2>
+    <p>세션은 클로드와 일하는 <b>방</b>이에요. 방마다 대화와 연결된 GitHub 저장소가 따로 있어요.</p>
+
+    <div class="session">
+      <div class="name">① 컴퓨터 접속 세션 (예전 대화방)</div>
+      <div class="repo">저장소: <code>poianopks/a</code></div>
+      <a class="btn" href="https://claude.ai/code/session_01PoUwAPos4eHsnxpuLowe3s" target="_blank" rel="noopener">이 방 열기 ↗</a>
+    </div>
+
+    <div class="session">
+      <div class="name">② 홈페이지 작업 (poianopks.github.io) (새 방)</div>
+      <div class="repo">저장소: <code>poianopks/poianopks.github.io</code></div>
+      <a class="btn" href="https://claude.ai/code/session_01NJa6e517TbQ9N6NgZjDGW2" target="_blank" rel="noopener">이 방 열기 ↗</a>
+    </div>
+
+    <div class="tip">💡 이 페이지 주소를 메모장이나 카카오톡 “나와의 채팅”에 저장해 두면 언제든 위 버튼으로 바로 들어갈 수 있어요.</div>
+  </div>
+
+  <div class="card">
+    <span class="badge">레슨 1</span>
+    <h2>새 세션(홈페이지 작업방)으로 들어가기</h2>
+
+    <h3>📱 스마트폰 Claude 앱</h3>
+    <ol>
+      <li>Claude 앱을 열어요.</li>
+      <li>왼쪽 위 <b>☰ 메뉴</b>를 눌러요.</li>
+      <li><b>Code</b>(클로드 코드)를 눌러요.</li>
+      <li>목록에서 <b>“홈페이지 작업 (poianopks.github.io)”</b>을 눌러요.</li>
+      <li>아래 입력창에 할 일을 써요. 예: “홈페이지 첫 화면 보여줘”</li>
+    </ol>
+
+    <h3>💻 PC 웹</h3>
+    <ol>
+      <li>크롬에서 <code>claude.ai/code</code> 에 들어가요.</li>
+      <li>왼쪽 목록에서 <b>“홈페이지 작업 (poianopks.github.io)”</b>을 눌러요.</li>
+      <li>입력창에 할 일을 써요.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <span class="badge">레슨 2</span>
+    <h2>다시 예전 대화방(a)으로 돌아오기</h2>
+
+    <h3>📱 스마트폰 Claude 앱</h3>
+    <ol>
+      <li><b>☰ 메뉴</b> → <b>Code</b>로 들어가요.</li>
+      <li>목록에서 <b>“컴퓨터 접속 세션”</b>을 눌러요.</li>
+      <li>예전 대화가 그대로 나와요. 화면을 위로 올리면 처음 대화부터 볼 수 있어요.</li>
+    </ol>
+
+    <h3>💻 PC 웹</h3>
+    <ol>
+      <li><code>claude.ai/code</code> 에 들어가요.</li>
+      <li>왼쪽 목록에서 <b>“컴퓨터 접속 세션”</b>을 눌러요.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <span class="badge">궁금해요</span>
+    <h2>❓ 자주 하는 질문</h2>
+    <dl class="qa">
+      <dt>Q. 새 세션에 들어가면 예전 대화가 지워지나요?</dt>
+      <dd>아니요. 두 세션은 따로 저장돼요. 언제든 오가며 볼 수 있어요.</dd>
+      <dt>Q. 새 세션의 클로드는 예전 대화를 아나요?</dt>
+      <dd>몰라요. 필요한 내용은 새 세션에 다시 알려주세요.</dd>
+      <dt>Q. 목록에서 세션이 안 보여요.</dt>
+      <dd>이 페이지 위쪽의 “이 방 열기” 버튼을 누르세요.</dd>
+      <dt>Q. 채팅 메뉴에서도 보이나요?</dt>
+      <dd>아니요. 일반 <b>채팅</b> 목록이 아니라 <b>Code</b> 목록에서 찾아야 해요.</dd>
+    </dl>
+  </div>
+
+  <div class="card summary">
+    <h2>✅ 한 줄 요약</h2>
+    <p>☰ 메뉴 → <b>Code</b> → 세션 이름을 누르면 그 방으로 들어가요.<br>
+    예전 대화는 <b>“컴퓨터 접속 세션”</b>에 그대로 남아 있어요.</p>
+  </div>
+
+</div>
+</body>
+</html>
