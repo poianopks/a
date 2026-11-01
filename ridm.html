@@ -10,7 +10,7 @@ var vexLoaded=false;
 function onVexLoaded(){vexLoaded=true;if(window._vexReadyCb)window._vexReadyCb();}
 (function(){
   var s=document.createElement("script");
-  s.src="https://cdn.jsdelivr.net/npm/vexflow@4.2.6/build/cjs/vexflow.js";
+  s.src="https://cdn.jsdelivr.net/npm/vexflow@4.2.5/build/cjs/vexflow.js";
   s.onload=onVexLoaded;
   s.onerror=function(){
     document.querySelectorAll(".sheet-wrap").forEach(function(el){
